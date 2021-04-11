@@ -59,7 +59,7 @@ const Pagination = (
           // handle: (1) < {4 5} [6] {7 8} > (10)
           case (hasLeftSpill && hasRightSpill):
           default: {
-            pagesShown = ['leftDots', ...pagesShown, 'dots'];
+            pagesShown = ['leftDots', ...pagesShown, 'rightDots'];
             break;
           }
         }
