@@ -22,9 +22,12 @@ const NavBar = () => {
       padding={4}
       paddingLeft={10}
       position="sticky"
+     
     >
-
-      <HStack spacing={16}>
+      <HStack
+        spacing={[4, 16]}
+        wrap={['wrap', 'nowrap']}
+      >
         <NextLink href="/" passHref>
           <Link href="/" boxShadow="none" color={asPath === '/' && 'blue.300'}>Home</Link>
         </NextLink>
