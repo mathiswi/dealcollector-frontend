@@ -1,49 +1,12 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
-import { SimpleGrid } from '@chakra-ui/react';
-
-import SearchContext from '../../context/SearchContext';
 
 import shops from '../../shops';
-import DealCard from '../../components/DealCard';
-import Pagination from '../../components/Pagination';
+import DealGrid from '../../components/DealGrid';
 
-const Shop = ({ shopDeals } : { shopDeals: Array<Deal> }) => {
-  const itemsPerPage = 18;
-  const { filter } = useContext(SearchContext);
-
-  const [filteredData, setFilteredDate] = useState([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(Math.ceil(shopDeals.length / itemsPerPage));
-
-  useEffect(() => {
-    const filtered = shopDeals.filter((deal) => deal.name.toLowerCase().includes(filter)
-    || deal.description?.toLowerCase().includes(filter));
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-    setFilteredDate(filtered);
-  }, [filter]);
-
-  return (
-    <>
-      <SimpleGrid
-        columns={6}
-        spacing={4}
-      >
-        {filteredData
-          .slice(currentPage * itemsPerPage, currentPage * itemsPerPage + itemsPerPage)
-          .map((deal) => (
-            <DealCard deal={deal} />
-          ))}
-      </SimpleGrid>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
-    </>
-  );
-};
+const Shop = ({ shopDeals } : { shopDeals: Deal[] }) => (
+  <DealGrid deals={shopDeals} />
+);
 
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
   const res = await fetch(`${process.env.API_URL}/${context.params.shop}`);
@@ -54,6 +17,7 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
       shopDeals,
       key: `/${context.params.shop}`,
     },
+    revalidate: 604800, // full week
   };
 };
 
