@@ -3,6 +3,8 @@ import {
   Stack, Text, Image, Skeleton,
 } from '@chakra-ui/react';
 
+import capitalize from '../utils/capitalize';
+
 const isValidToday = (validFrom: number) => {
   const currentDay = new Date().getDay();
   return (validFrom ?? 0) <= currentDay;
@@ -10,20 +12,17 @@ const isValidToday = (validFrom: number) => {
 
 const weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
 
-const DealCard = ({ deal } : { deal: Deal }) => (
+const DealCard = ({ deal }: { deal: Deal }) => (
   <Stack
     borderRadius={6}
     border="1px solid"
     borderColor={isValidToday(deal.validFrom) ? 'gray.600' : 'red.600'}
-    // height="200px"
     padding={3}
   >
     <Stack justifyContent="center" height="100px">
-
       <Image
         alignSelf="center"
         maxH="100px"
-      // objectFit="cover"
         fallback={<Skeleton alignSelf="center" h="100px" w="140px" />}
         src={deal.imageUrl}
         alt="deal image"
@@ -35,18 +34,38 @@ const DealCard = ({ deal } : { deal: Deal }) => (
         {deal.name}
       </Text>
       <Text fontSize="xs" as="i">
-        {deal.unit}
+        {deal.unit ?? <>&nbsp;&nbsp;</>}
       </Text>
+      <Text fontSize="xs" as="i" />
+      {deal.regularPrice ? (
+        <Text fontSize="xs" as="s">
+          {deal.regularPrice}
+          {' '}
+          €
+        </Text>
+      ) : (
+        <Text fontSize="xs">&nbsp;&nbsp;</Text>
+      )}
+
       <Text fontSize="xs">
         {deal.dealPrice}
         {' '}
         €
+        {deal.basePrice && (
+          <Text as="i" display="inline">
+            {' '}
+            (
+            {deal.basePrice}
+            )
+          </Text>
+        )}
+
       </Text>
-      <Text fontSize="xs" casing="capitalize">
-        {deal.shop}
+      <Text fontSize="xs">
+        {capitalize(deal.shop)}
         {' '}
         {!isValidToday(deal.validFrom) && (
-          `(gültig ab ${weekDays[deal.validFrom - 1]})`
+          `(ab ${weekDays[deal.validFrom - 1]})`
         )}
 
       </Text>
