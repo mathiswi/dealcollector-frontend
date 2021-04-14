@@ -2,7 +2,7 @@ import React, {
   SetStateAction, Dispatch, useEffect, useState,
 } from 'react';
 import {
-  Flex, HStack, Button, IconButton,
+  Flex, HStack, Button, IconButton, useMediaQuery,
 } from '@chakra-ui/react';
 import {
   ChevronLeftIcon, ChevronRightIcon,
@@ -24,7 +24,8 @@ const Pagination = (
   { currentPage, setCurrentPage, totalPages } :
   { currentPage: number, setCurrentPage: Dispatch<SetStateAction<number>>, totalPages: number },
 ) => {
-  const pageNeighbours = 2;
+  const [isMobile] = useMediaQuery('(max-width: 30em)');
+  const pageNeighbours = isMobile ? 1 : 2;
 
   const [pages, setPages] = useState([]);
 
@@ -81,7 +82,7 @@ const Pagination = (
   };
 
   return (
-    <Flex justifyContent="center" marginTop={4}>
+    <Flex justifyContent="center" marginTop={4} marginBottom={4}>
       <HStack spacing={1}>
         <IconButton aria-label="previous page" onClick={goToPreviousPage}>
           <ChevronLeftIcon />
