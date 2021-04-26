@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Stack, Text, Image, Skeleton,
+  Stack, Text, Image, Skeleton, Tooltip,
 } from '@chakra-ui/react';
 
 import capitalize from '../utils/capitalize';
@@ -30,9 +30,11 @@ const DealCard = ({ deal }: { deal: Deal }) => (
       />
     </Stack>
     <Stack spacing="1px">
-      <Text fontSize="xs" noOfLines={[3, 1]}>
-        {deal.name}
-      </Text>
+      <Tooltip label={deal.name} aria-label="name-tooltip">
+        <Text fontSize="sm" noOfLines={[3, 1]} fontWeight={700}>
+          {deal.name}
+        </Text>
+      </Tooltip>
       <Text fontSize="xs" as="i">
         {deal.unit ?? <>&nbsp;&nbsp;</>}
       </Text>
@@ -46,21 +48,22 @@ const DealCard = ({ deal }: { deal: Deal }) => (
       ) : (
         <Text fontSize="xs">&nbsp;&nbsp;</Text>
       )}
-
-      <Text fontSize="xs">
-        {deal.dealPrice}
-        {' '}
-        €
-        {deal.basePrice && (
+      <Tooltip label={deal.basePrice} aria-label="name-tooltip">
+        <Text fontSize="sm" fontWeight={700} display="inline" noOfLines={[3, 1]}>
+          {deal.dealPrice}
+          {' '}
+          €
+          {deal.basePrice && (
           <Text as="i" display="inline">
             {' '}
             (
             {deal.basePrice}
             )
           </Text>
-        )}
+          )}
 
-      </Text>
+        </Text>
+      </Tooltip>
       <Text fontSize="xs">
         {capitalize(deal.shop)}
         {' '}
