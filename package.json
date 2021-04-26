@@ -14,8 +14,8 @@
     "@emotion/styled": "^11.1.5",
     "framer-motion": "^4.0.2",
     "next": "10.0.9",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^0.0.0-experimental-709f94841",
+    "react-dom": "^0.0.0-experimental-709f94841",
     "react-icons": "^4.2.0",
     "sass": "^1.32.8"
   },
