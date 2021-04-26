@@ -25,8 +25,7 @@ const Pagination = (
   { currentPage: number, setCurrentPage: Dispatch<SetStateAction<number>>, totalPages: number },
 ) => {
   const [isMobile] = useMediaQuery('(max-width: 30em)');
-  const pageNeighbours = isMobile ? 1 : 2;
-
+  const pageNeighbours = isMobile ? 0 : 2;
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
@@ -84,31 +83,36 @@ const Pagination = (
   return (
     <Flex justifyContent="center" marginTop={4} marginBottom={4}>
       <HStack spacing={1}>
-        <IconButton aria-label="previous page" onClick={goToPreviousPage}>
-          <ChevronLeftIcon />
-        </IconButton>
-        {pages.map((page) => (
-          <React.Fragment key={`${page} fragment`}>
-            {(page === 'leftDots' || page === 'rightDots') ? (
-              <span key={`${page + 1} dots`}>…</span>
-            ) : (
-              <Button
-                variant="ghost"
-                fontSize="0.8rem"
-                h="25px"
-                w="6px"
-                onClick={() => setCurrentPage(page)}
-                color={currentPage === page && 'blue.300'}
-                key={`pageNumber-${page + +1}`}
-              >
-                {page}
-              </Button>
-            )}
-          </React.Fragment>
-        ))}
-        <IconButton aria-label="next page" onClick={goToNextPage}>
-          <ChevronRightIcon />
-        </IconButton>
+        {totalPages > 2 && (
+
+        <>
+          <IconButton aria-label="previous page" onClick={goToPreviousPage}>
+            <ChevronLeftIcon />
+          </IconButton>
+            {pages.map((page) => (
+              <React.Fragment key={`${page} fragment`}>
+                {(page === 'leftDots' || page === 'rightDots') ? (
+                  <span key={`${page + 1} dots`}>…</span>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    fontSize="0.8rem"
+                    h="25px"
+                    w="6px"
+                    onClick={() => setCurrentPage(page)}
+                    color={currentPage === page && 'blue.300'}
+                    key={`pageNumber-${page + +1}`}
+                  >
+                    {page}
+                  </Button>
+                )}
+              </React.Fragment>
+            ))}
+          <IconButton aria-label="next page" onClick={goToNextPage}>
+            <ChevronRightIcon />
+          </IconButton>
+        </>
+        )}
       </HStack>
     </Flex>
   );
