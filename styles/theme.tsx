@@ -12,7 +12,7 @@ const theme = extendTheme({
   },
   fonts: {
     heading: 'Open Sans',
-    body: 'Open Sans',
+    body: 'Roboto',
   },
 });
 export default theme;
