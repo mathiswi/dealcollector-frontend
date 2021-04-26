@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Flex, Input, InputGroup, InputLeftElement, useColorMode, Button,
+  Flex, Input, InputGroup, InputLeftElement, useColorMode, Button, Box,
 } from '@chakra-ui/react';
 import { SearchIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 
@@ -17,8 +17,8 @@ const NavBar = () => {
       justifyContent="space-between"
       marginBottom={2}
     >
-      <div />
-      <InputGroup width={400}>
+      <Box display={['none', 'block']} />
+      <InputGroup width={['unset', 400]}>
         <InputLeftElement>
           <SearchIcon />
         </InputLeftElement>

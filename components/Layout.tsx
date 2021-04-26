@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => (
-  <Container maxW="container.xl">
+  <Container maxW="container.xl" padding={0}>
     <NavBar />
     <Flex
       flexDirection={['column', 'row']}
