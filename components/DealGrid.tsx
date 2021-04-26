@@ -8,7 +8,7 @@ import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
-  const itemsPerPage = 18;
+  const itemsPerPage = 12;
 
   const { filter } = useContext(SearchContext);
 
@@ -27,7 +27,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   return (
     <>
       <SimpleGrid
-        columns={[1, 2, 3, 4, 5, 6]}
+        columns={[1, 2, 3, 4]}
         spacing={4}
       >
         {filteredData
