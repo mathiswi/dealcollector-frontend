@@ -1,21 +1,21 @@
-import { Container, Flex, Box } from '@chakra-ui/react';
+import { Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => (
-  <Box>
+  <Container maxW="container.xl">
     <NavBar />
     <Flex
       flexDirection={['column', 'row']}
       alignItems={['center', 'flex-start']}
     >
       <Sidebar />
-      <Container maxW={['95vw', '80vw']} paddingTop={8}>
+      <Container maxW="unset">
         {children}
       </Container>
     </Flex>
-  </Box>
+  </Container>
 );
 
 export default Layout;

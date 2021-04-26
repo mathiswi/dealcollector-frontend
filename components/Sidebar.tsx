@@ -10,8 +10,9 @@ import { FiHome } from 'react-icons/fi';
 const Sidebar = () => (
   <Flex
     left={0}
-    width={['95vw', '200px']}
-    padding={[4, 8]}
+    width={['100vw', '200px']}
+    padding={[3, 6]}
+    paddingTop={[3, 0]}
     flexDirection="column"
   >
     <Stack direction={['row', 'column']}>
