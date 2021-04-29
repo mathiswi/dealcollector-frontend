@@ -7,6 +7,7 @@ import { Fonts } from '../styles/Fonts';
 import theme from '../styles/theme';
 import Layout from '../components/Layout';
 import { SearchProvider } from '../context/SearchContext';
+import { FilterProvider } from '../context/FilterContext';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -18,9 +19,11 @@ export default function MyApp({ Component, pageProps }) {
       <ChakraProvider theme={theme} resetCSS>
         <Fonts />
         <SearchProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <FilterProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </FilterProvider>
         </SearchProvider>
       </ChakraProvider>
     </>

@@ -20,9 +20,14 @@ const createRange = (from: number, to: number, step: number = 1): Array<Number |
   return arr;
 };
 
+interface PaginationProps {
+  currentPage: number,
+  setCurrentPage: Dispatch<SetStateAction<number>>
+  totalPages: number
+}
+
 const Pagination = (
-  { currentPage, setCurrentPage, totalPages } :
-  { currentPage: number, setCurrentPage: Dispatch<SetStateAction<number>>, totalPages: number },
+  { currentPage, setCurrentPage, totalPages } : PaginationProps,
 ) => {
   const [isMobile] = useMediaQuery('(max-width: 30em)');
   const pageNeighbours = isMobile ? 0 : 2;
@@ -42,21 +47,21 @@ const Pagination = (
         const spillOffset = totalPageNumber - (pagesShown.length + 1);
 
         switch (true) {
-          // handle: (1) < {5 6} [7] {8 9} (10)
+          //  (1) < {5 6} [7] {8 9} (10)
           case (hasLeftSpill && !hasRightSpill): {
             const extraPages = createRange(startPage - spillOffset, startPage - 1);
             pagesShown = ['leftDots', ...extraPages, ...pagesShown];
             break;
           }
 
-          // handle: (1) {2 3} [4] {5 6} > (10)
+          // (1) {2 3} [4] {5 6} > (10)
           case (!hasLeftSpill && hasRightSpill): {
             const extraPages = createRange(endPage + 1, endPage + spillOffset);
             pagesShown = [...pagesShown, ...extraPages, 'rightDots'];
             break;
           }
 
-          // handle: (1) < {4 5} [6] {7 8} > (10)
+          // (1) < {4 5} [6] {7 8} > (10)
           case (hasLeftSpill && hasRightSpill):
           default: {
             pagesShown = ['leftDots', ...pagesShown, 'rightDots'];
