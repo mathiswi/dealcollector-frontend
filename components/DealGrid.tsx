@@ -10,7 +10,7 @@ import { filterData } from '../utils/filterData';
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const itemsPerPage = 12;
 
-  const { filter } = useContext(SearchContext);
+  const { query } = useContext(SearchContext);
 
   const [filteredData, setFilteredDate] = useState([]);
 

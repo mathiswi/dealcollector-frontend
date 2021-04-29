@@ -7,7 +7,7 @@ import { SearchIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import SearchContext from '../context/SearchContext';
 
 const NavBar = () => {
-  const { filter, setFilter } = useContext(SearchContext);
+  const { query, setQuery } = useContext(SearchContext);
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Flex
@@ -18,14 +18,14 @@ const NavBar = () => {
       marginBottom={2}
     >
       <Box display={['none', 'block']} />
-      <InputGroup width={['unset', 400]}>
+      <InputGroup width={['70%', 'unset', 400]}>
         <InputLeftElement>
           <SearchIcon />
         </InputLeftElement>
         <Input
           placeholder="Search..."
-          value={filter}
-          onChange={(event) => setFilter(event.target.value.toLowerCase())}
+          value={query}
+          onChange={(event) => setQuery(event.target.value.toLowerCase())}
           background={colorMode === 'dark' && 'gray.700'}
           boxShadow="md"
         />

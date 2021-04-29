@@ -4,11 +4,11 @@ import React, { createContext, useState } from 'react';
 const SearchContext = createContext(undefined);
 
 const SearchProvider = ({ children }) => {
-  const [filter, setFilter] = useState('');
+  const [query, setQuery] = useState('');
 
   return (
     <SearchContext.Provider value={{
-      filter, setFilter,
+      query, setQuery,
     }}
     >
       {children}
