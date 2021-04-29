@@ -1,16 +1,18 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, useBreakpointValue } from '@chakra-ui/react';
 
 import SearchContext from '../context/SearchContext';
+import FilterContext from '../context/FilterContext';
 
 import DealCard from './DealCard';
 import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
-  const itemsPerPage = 12;
+  const itemsPerPage = useBreakpointValue({ base: 6, md: 9, lg: 12 });
 
   const { query } = useContext(SearchContext);
+  const { validFilterActive } = useContext(FilterContext);
 
   const [filteredData, setFilteredDate] = useState([]);
 
@@ -18,11 +20,15 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const [totalPages, setTotalPages] = useState(Math.ceil(deals.length / itemsPerPage));
 
   useEffect(() => {
-    const filtered = filterData(deals, filter);
+    const filtered = filterData({ data: deals, query, filterNonValid: validFilterActive });
     setCurrentPage(1);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setFilteredDate(filtered);
-  }, [filter]);
+  }, [query, validFilterActive]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
+  }, [itemsPerPage]);
 
   return (
     <>
