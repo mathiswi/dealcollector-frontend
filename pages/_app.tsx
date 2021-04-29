@@ -8,7 +8,7 @@ import theme from '../styles/theme';
 import Layout from '../components/Layout';
 import { SearchProvider } from '../context/SearchContext';
 
-export default function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>

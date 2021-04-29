@@ -12,7 +12,8 @@ const NavBar = () => {
   return (
     <Flex
       as="header"
-      padding={4}
+      paddingTop={4}
+      paddingBottom={4}
       position="sticky"
       justifyContent="space-between"
       marginBottom={2}
