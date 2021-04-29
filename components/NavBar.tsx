@@ -14,6 +14,8 @@ const NavBar = () => {
       as="header"
       paddingTop={4}
       paddingBottom={4}
+      paddingLeft={[4, 0]}
+      paddingRight={[4, 0]}
       position="sticky"
       justifyContent="space-between"
       marginBottom={2}

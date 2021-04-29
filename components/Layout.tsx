@@ -12,7 +12,7 @@ const Layout = ({ children }) => (
       flex="1 1 auto"
     >
       <Sidebar />
-      <Box maxW="unset" height="100%" flex="1 1 auto">
+      <Box maxW="unset" height="100%" width="95%" flex="1 1 auto">
         {children}
       </Box>
     </Flex>

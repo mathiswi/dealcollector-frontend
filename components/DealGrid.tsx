@@ -1,7 +1,7 @@
 import React, {
   useEffect, useContext, useState, createRef,
 } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
 import { FixedSizeGrid as Grid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
@@ -11,16 +11,15 @@ import FilterContext from '../context/FilterContext';
 import DealCard from './DealCard';
 import { filterData } from '../utils/filterData';
 
-const columnCount = 4;
 const Cell = React.memo(({
   // @ts-ignore
   data, columnIndex, rowIndex, style,
 }) => {
-  const filteredData = data;
+  const { filteredData, columnCount } = data;
   const dealIndex = rowIndex * columnCount + columnIndex;
   if (dealIndex >= filteredData.length) return <></>;
   return (
-    <Box style={style} paddingRight={4}>
+    <Box style={style} padding={columnCount === 1 ? 4 : 0} paddingRight={4}>
       <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
     </Box>
 
@@ -31,7 +30,11 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
-  const gridRef = React.createRef<Grid>();
+  const gridRef = createRef<Grid>();
+
+  const columnCount = useBreakpointValue({
+    base: 1, sm: 2, md: 3, lg: 4,
+  }) ?? 1;
 
   const [filteredData, setFilteredDate] = useState([]);
 
@@ -43,7 +46,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
       rowIndex: 0,
     });
   }, [query, validFilterActive]);
-
+  console.log(columnCount);
   return (
     <Box height="100%">
       <AutoSizer>
@@ -51,6 +54,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
           const columnWidth = Math.ceil(width / columnCount);
           const rowCount = Math.ceil(filteredData.length / columnCount);
           const rowHeight = 250;
+
           return (
             <Grid
               ref={gridRef}
@@ -62,7 +66,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
               width={width}
               overscanRowCount={5}
               style={{ overflowX: 'hidden' }}
-              itemData={filteredData}
+              itemData={{ filteredData, columnCount }}
             >
               {Cell}
             </Grid>

@@ -26,7 +26,6 @@ const Sidebar = () => {
             <FiHome />
           </Button>
         </Link>
-
         <Link href="/famila">
           <Button width="100%">
             Famila
@@ -47,15 +46,16 @@ const Sidebar = () => {
             Edeka
           </Button>
         </Link>
-        <Checkbox
-          isChecked={validFilterActive}
-          onChange={(event) => setValidFilterActive(event.target.checked)}
-          size="md"
-          colorScheme="green"
-        >
-          Heute verfügbar?
-        </Checkbox>
       </Stack>
+      <Checkbox
+        isChecked={validFilterActive}
+        onChange={(event) => setValidFilterActive(event.target.checked)}
+        size="md"
+        colorScheme="green"
+        marginTop={4}
+      >
+        Heute verfügbar?
+      </Checkbox>
     </Flex>
 
   );
