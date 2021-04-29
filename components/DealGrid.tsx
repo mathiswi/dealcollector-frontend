@@ -36,10 +36,6 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
     setFilteredDate(filtered);
   }, [query, validFilterActive]);
 
-  useEffect(() => {
-    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
-  }, [itemsPerPage]);
-
   return (
     <Box height="100%">
       <AutoSizer>
