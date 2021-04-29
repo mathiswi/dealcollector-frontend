@@ -1,28 +1,38 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { SimpleGrid, useBreakpointValue } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import { FixedSizeGrid as Grid } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 import SearchContext from '../context/SearchContext';
 import FilterContext from '../context/FilterContext';
 
 import DealCard from './DealCard';
-import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
-const DealGrid = ({ deals } : { deals: Deal[] }) => {
-  const itemsPerPage = useBreakpointValue({ base: 6, md: 9, lg: 12 });
+const columnCount = 4;
+const Cell = React.memo(({
+  // @ts-ignore
+  data, columnIndex, rowIndex, style,
+}) => {
+  const filteredData = data;
+  const dealIndex = rowIndex * columnCount + columnIndex;
+  if (dealIndex >= filteredData.length) return <></>;
+  return (
+    <Box style={style} paddingRight={4}>
+      <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
+    </Box>
 
+  );
+});
+
+const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
   const [filteredData, setFilteredDate] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(Math.ceil(deals.length / itemsPerPage));
-
   useEffect(() => {
     const filtered = filterData({ data: deals, query, filterNonValid: validFilterActive });
-    setCurrentPage(1);
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setFilteredDate(filtered);
   }, [query, validFilterActive]);
 
@@ -31,23 +41,30 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   }, [itemsPerPage]);
 
   return (
-    <>
-      <SimpleGrid
-        columns={[1, 2, 3, 4]}
-        spacing={4}
-      >
-        {filteredData
-          .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
-          .map((deal) => (
-            <DealCard deal={deal} key={deal.dealId} />
-          ))}
-      </SimpleGrid>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
-    </>
+    <Box height="100%">
+      <AutoSizer>
+        {({ height, width }) => {
+          const columnWidth = Math.ceil(width / columnCount);
+          const rowCount = Math.ceil(filteredData.length / columnCount);
+          const rowHeight = 250;
+          return (
+            <Grid
+              columnCount={columnCount}
+              columnWidth={columnWidth}
+              height={height}
+              rowCount={rowCount}
+              rowHeight={rowHeight}
+              width={width}
+              overscanRowCount={5}
+              style={{ overflowX: 'hidden' }}
+              itemData={filteredData}
+            >
+              {Cell}
+            </Grid>
+          );
+        }}
+      </AutoSizer>
+    </Box>
   );
 };
 

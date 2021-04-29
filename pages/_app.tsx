@@ -9,7 +9,7 @@ import Layout from '../components/Layout';
 import { SearchProvider } from '../context/SearchContext';
 import { FilterProvider } from '../context/FilterContext';
 
-export default function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
