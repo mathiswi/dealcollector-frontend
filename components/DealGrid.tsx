@@ -1,4 +1,6 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, {
+  useEffect, useContext, useState, createRef,
+} from 'react';
 import { Box } from '@chakra-ui/react';
 import { FixedSizeGrid as Grid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -29,11 +31,17 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
+  const gridRef = React.createRef<Grid>();
+
   const [filteredData, setFilteredDate] = useState([]);
 
   useEffect(() => {
     const filtered = filterData({ data: deals, query, filterNonValid: validFilterActive });
     setFilteredDate(filtered);
+    gridRef.current?.scrollToItem({
+      columnIndex: 0,
+      rowIndex: 0,
+    });
   }, [query, validFilterActive]);
 
   return (
@@ -45,6 +53,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
           const rowHeight = 250;
           return (
             <Grid
+              ref={gridRef}
               columnCount={columnCount}
               columnWidth={columnWidth}
               height={height}
