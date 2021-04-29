@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import { FixedSizeGrid as Grid, areEqual } from 'react-window';
+import { FixedSizeGrid as Grid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
 import SearchContext from '../context/SearchContext';
@@ -8,8 +8,23 @@ import SearchContext from '../context/SearchContext';
 import DealCard from './DealCard';
 import { filterData } from '../utils/filterData';
 
+const columnCount = 4;
+const Cell = React.memo(({
+  // @ts-ignore
+  data, columnIndex, rowIndex, style,
+}) => {
+  const filteredData = data;
+  const dealIndex = rowIndex * columnCount + columnIndex;
+  if (dealIndex >= filteredData.length) return <></>;
+  return (
+    <Box style={style} paddingRight={4}>
+      <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
+    </Box>
+
+  );
+});
+
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
-  const columnCount = 4;
   const { filter } = useContext(SearchContext);
 
   const [filteredData, setFilteredDate] = useState([]);
@@ -18,17 +33,6 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
     const filtered = filterData(deals, filter);
     setFilteredDate(filtered);
   }, [filter]);
-  // @ts-ignore
-  const Cell = React.memo(({ columnIndex, rowIndex, style }) => {
-    const dealIndex = rowIndex * columnCount + columnIndex;
-    if (dealIndex >= filteredData.length) return <></>;
-    return (
-      <Box style={style} paddingRight={4}>
-        <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
-      </Box>
-
-    );
-  }, areEqual);
 
   return (
     <Box height="100%">
@@ -47,6 +51,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
               width={width}
               overscanRowCount={5}
               style={{ overflowX: 'hidden' }}
+              itemData={filteredData}
             >
               {Cell}
             </Grid>
