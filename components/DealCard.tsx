@@ -12,9 +12,13 @@ const isValidToday = (validFrom: number) => {
 
 const weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
 
+const EmptyLine = () => (
+  <>&nbsp;&nbsp;</>
+);
+
 const DealCard = ({ deal }: { deal: Deal }) => (
   <Stack
-    borderRadius={6}
+    borderRadius={4}
     border="1px solid"
     borderColor={isValidToday(deal.validFrom) ? 'gray.600' : 'red.600'}
     padding={3}
@@ -36,7 +40,7 @@ const DealCard = ({ deal }: { deal: Deal }) => (
         </Text>
       </Tooltip>
       <Text fontSize="xs" as="i">
-        {deal.unit ?? <>&nbsp;&nbsp;</>}
+        {deal.unit ?? <EmptyLine />}
       </Text>
       <Text fontSize="xs" as="i" />
       {deal.regularPrice ? (
@@ -46,7 +50,7 @@ const DealCard = ({ deal }: { deal: Deal }) => (
           €
         </Text>
       ) : (
-        <Text fontSize="xs">&nbsp;&nbsp;</Text>
+        <Text fontSize="xs"><EmptyLine /></Text>
       )}
       <Tooltip label={deal.basePrice} aria-label="name-tooltip">
         <Text fontSize="sm" fontWeight={700} display="inline" noOfLines={[3, 1]}>
