@@ -1,79 +1,49 @@
-import React, {
-  useEffect, useContext, useState, createRef,
-} from 'react';
-import { Box, useBreakpointValue } from '@chakra-ui/react';
-import { FixedSizeGrid as Grid } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import React, { useEffect, useContext, useState } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
 
 import SearchContext from '../context/SearchContext';
 import FilterContext from '../context/FilterContext';
 
 import DealCard from './DealCard';
+import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
-const Cell = React.memo(({
-  // @ts-ignore
-  data, columnIndex, rowIndex, style,
-}) => {
-  const { filteredData, columnCount } = data;
-  const dealIndex = rowIndex * columnCount + columnIndex;
-  if (dealIndex >= filteredData.length) return <></>;
-  return (
-    <Box style={style} padding={columnCount === 1 ? 4 : 0} paddingRight={4}>
-      <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
-    </Box>
-
-  );
-});
-
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
+  const itemsPerPage = 12;
+
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
-  const gridRef = createRef<Grid>();
-
-  const columnCount = useBreakpointValue({
-    base: 1, sm: 2, md: 3, lg: 4,
-  }) ?? 1;
-
   const [filteredData, setFilteredDate] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(Math.ceil(deals.length / itemsPerPage));
 
   useEffect(() => {
     const filtered = filterData({ data: deals, query, filterNonValid: validFilterActive });
+    setCurrentPage(1);
+    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setFilteredDate(filtered);
-    gridRef.current?.scrollToItem({
-      columnIndex: 0,
-      rowIndex: 0,
-    });
-  }, [query, validFilterActive]);
-  console.log(columnCount);
-  return (
-    <Box height="100%">
-      <AutoSizer>
-        {({ height, width }) => {
-          const columnWidth = Math.ceil(width / columnCount);
-          const rowCount = Math.ceil(filteredData.length / columnCount);
-          const rowHeight = 250;
+  }, [query]);
 
-          return (
-            <Grid
-              ref={gridRef}
-              columnCount={columnCount}
-              columnWidth={columnWidth}
-              height={height}
-              rowCount={rowCount}
-              rowHeight={rowHeight}
-              width={width}
-              overscanRowCount={5}
-              style={{ overflowX: 'hidden' }}
-              itemData={{ filteredData, columnCount }}
-            >
-              {Cell}
-            </Grid>
-          );
-        }}
-      </AutoSizer>
-    </Box>
+  return (
+    <>
+      <SimpleGrid
+        columns={[1, 2, 3, 4]}
+        spacing={4}
+      >
+        {filteredData
+          .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
+          .map((deal) => (
+            <DealCard deal={deal} key={deal.dealId} />
+          ))}
+      </SimpleGrid>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
+    </>
   );
 };
 
