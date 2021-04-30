@@ -5,20 +5,13 @@ import {
   Image,
   Skeleton,
   Tooltip,
-  IconButton,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
+  Box,
+  useColorMode,
 } from '@chakra-ui/react';
-import {
-  InfoOutlineIcon,
-} from '@chakra-ui/icons';
 
 import capitalize from '../utils/capitalize';
+
+import DescriptionPopover from './DescriptionPopover';
 
 const isValidToday = (validFrom: number) => {
   const currentDay = new Date().getDay();
@@ -88,42 +81,24 @@ const DealCard = ({ deal }: { deal: Deal }) => {
 
           </Text>
         </Tooltip>
+
         <Text fontSize="xs">
           {capitalize(deal.shop)}
           {' '}
           {!isValidToday(deal.validFrom) && (
             `(ab ${weekDays[deal.validFrom - 1]})`
           )}
-
         </Text>
-        <Popover
-          isOpen={showDescription}
-          onClose={() => setShowDescription(false)}
-        >
-          <PopoverTrigger>
-            <IconButton
-              variant="ghost"
-              size="sm"
-              colorScheme="teal"
-              aria-label="Call Sage"
-              position="absolute"
-              bottom={1}
-              right={1}
-              icon={<InfoOutlineIcon />}
-              onClick={() => setShowDescription(!showDescription)}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Beschreibung</PopoverHeader>
-            <PopoverBody>{deal.description === '' ? '-' : deal.description}</PopoverBody>
-          </PopoverContent>
-        </Popover>
+
+        <DescriptionPopover
+          description={deal.description !== '' ? deal.description : undefined}
+          showDescription={showDescription}
+          setShowDescription={setShowDescription}
+        />
 
       </Stack>
 
-    </Stack>
+    </Box>
   );
 };
 
