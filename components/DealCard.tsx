@@ -26,16 +26,17 @@ const EmptyLine = () => (
 
 const DealCard = ({ deal }: { deal: Deal }) => {
   const [showDescription, setShowDescription] = useState(false);
+  const { colorMode } = useColorMode();
 
   return (
-    <Stack
-      borderRadius={4}
+    <Box
+      borderRadius={2}
       border="1px solid"
-      borderColor={isValidToday(deal.validFrom) ? 'gray.600' : 'red.600'}
-      padding={3}
+      borderColor={isValidToday(deal.validFrom) ? 'gray.500' : 'red.600'}
+      // padding={3}
       position="relative"
     >
-      <Stack justifyContent="center" height="100px">
+      <Stack justifyContent="center" height="100px" marginY={2}>
         <Image
           alignSelf="center"
           maxH="100px"
@@ -46,28 +47,31 @@ const DealCard = ({ deal }: { deal: Deal }) => {
         />
       </Stack>
 
-      <Stack spacing="1px">
+      <Stack spacing="1px" backgroundColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} padding={3}>
+
         <Tooltip label={deal.name} aria-label="name-tooltip">
           <Text fontSize="sm" noOfLines={[3, 1]} fontWeight={700}>
             {deal.name}
           </Text>
         </Tooltip>
+
         <Text fontSize="xs" as="i">
           {deal.unit ?? <EmptyLine />}
         </Text>
-        <Text fontSize="xs" as="i" />
+
         {deal.regularPrice ? (
           <Text fontSize="xs" as="s">
-            {deal.regularPrice}
+            {deal.regularPrice.toFixed(2)}
             {' '}
             €
           </Text>
         ) : (
           <Text fontSize="xs"><EmptyLine /></Text>
         )}
+
         <Tooltip label={deal.basePrice} aria-label="name-tooltip">
           <Text fontSize="sm" fontWeight={700} display="inline" noOfLines={[3, 1]}>
-            {deal.dealPrice}
+            {deal.dealPrice?.toFixed(2)}
             {' '}
             €
             {deal.basePrice && (
