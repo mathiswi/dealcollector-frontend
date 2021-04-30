@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { createContext, useState } from 'react';
 
 const FilterContext = createContext(undefined);

@@ -8,7 +8,7 @@ export function filterData({ data, query, filterNonValid = false }: FilterFuncti
   return data.filter((deal) => {
     const currentDay = new Date().getDay();
     const validFrom = deal.validFrom ?? 0;
-    if (filterNonValid && currentDay <= validFrom) {
+    if (filterNonValid && currentDay < validFrom) {
       return null;
     }
     return (
