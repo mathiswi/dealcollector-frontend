@@ -14,7 +14,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
-  const [filteredData, setFilteredDate] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(deals.length / itemsPerPage));
@@ -23,7 +23,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
     const filtered = filterData({ data: deals, query, filterNonValid: validFilterActive });
     setCurrentPage(1);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-    setFilteredDate(filtered);
+    setFilteredData(filtered);
   }, [query]);
 
   return (
