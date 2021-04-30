@@ -22,27 +22,27 @@ const Sidebar = () => {
     >
       <Stack direction={['row', 'column']}>
         <Link href="/">
-          <Button width={['80%', '100%']}>
+          <Button width={['80%', '100%']} fontSize={[14, 16]}>
             <FiHome />
           </Button>
         </Link>
         <Link href="/famila">
-          <Button width="100%">
+          <Button width="100%" fontSize={[14, 16]}>
             Famila
           </Button>
         </Link>
         <Link href="/lidl">
-          <Button width="100%">
+          <Button width="100%" fontSize={[14, 16]}>
             Lidl
           </Button>
         </Link>
         <Link href="/aldi">
-          <Button width="100%">
+          <Button width="100%" fontSize={[14, 16]}>
             Aldi
           </Button>
         </Link>
         <Link href="/edeka">
-          <Button width="100%">
+          <Button width="100%" fontSize={[14, 16]}>
             Edeka
           </Button>
         </Link>
@@ -51,7 +51,7 @@ const Sidebar = () => {
         isChecked={validFilterActive}
         onChange={(event) => setValidFilterActive(event.target.checked)}
         size="md"
-        colorScheme="green"
+        colorScheme="teal"
         marginTop={4}
       >
         Heute verfügbar?
