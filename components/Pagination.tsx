@@ -78,11 +78,18 @@ const Pagination = (
   const goToPreviousPage = () => {
     const newPage = Math.max(1, currentPage + -1);
     setCurrentPage(newPage);
+    window.scrollTo(0, 0);
   };
 
   const goToNextPage = () => {
     const newPage = Math.min(totalPages, currentPage + 1);
     setCurrentPage(newPage);
+    window.scrollTo(0, 0);
+  };
+
+  const handlePageChange = (value: number) => {
+    setCurrentPage(value);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -104,7 +111,7 @@ const Pagination = (
                     fontSize="0.8rem"
                     h="25px"
                     w="6px"
-                    onClick={() => setCurrentPage(page)}
+                    onClick={() => handlePageChange(page)}
                     color={currentPage === page && 'blue.300'}
                     key={`pageNumber-${page + +1}`}
                   >
