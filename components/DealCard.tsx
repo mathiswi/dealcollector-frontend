@@ -106,4 +106,4 @@ const DealCard = ({ deal }: { deal: Deal }) => {
   );
 };
 
-export default DealCard;
+export default React.memo(DealCard);
