@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, useBreakpointValue, Skeleton } from '@chakra-ui/react';
 
 import SearchContext from '../context/SearchContext';
 import FilterContext from '../context/FilterContext';
@@ -9,12 +9,15 @@ import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
 const DealGrid = ({ deals } : { deals: Deal[] }) => {
-  const itemsPerPage = 12;
+  const itemsPerPage = useBreakpointValue({
+    base: 9, sm: 10, md: 9, lg: 12,
+  }) ?? 12;
 
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState<Deal[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(deals.length / itemsPerPage));
@@ -26,17 +29,29 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
     setFilteredData(filtered);
   }, [query, validFilterActive]);
 
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <>
       <SimpleGrid
         columns={[1, 2, 3, 4]}
         spacing={4}
       >
-        {filteredData
-          .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
-          .map((deal) => (
-            <DealCard deal={deal} key={deal.dealId} />
-          ))}
+        {loading ? (
+          [...Array(itemsPerPage)].map(() => (
+            <Skeleton height={222} />
+          ))
+        ) : (
+          <>
+            {filteredData
+              .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
+              .map((deal) => (
+                <DealCard deal={deal} key={deal.dealId} />
+              ))}
+          </>
+        )}
       </SimpleGrid>
       <Pagination
         currentPage={currentPage}
