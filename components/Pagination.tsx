@@ -93,7 +93,7 @@ const Pagination = (
   };
 
   return (
-    <Flex justifyContent="center" marginTop={4} marginBottom={4}>
+    <Flex justifyContent="center" marginTop={4} marginBottom={[12, 4]}>
       <HStack spacing={1}>
         {totalPages > 2 && (
 
