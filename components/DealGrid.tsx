@@ -24,7 +24,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
     setCurrentPage(1);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setFilteredData(filtered);
-  }, [query]);
+  }, [query, validFilterActive]);
 
   return (
     <>
