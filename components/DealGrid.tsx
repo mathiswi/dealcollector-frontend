@@ -41,7 +41,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
       >
         {loading ? (
           [...Array(itemsPerPage)].map(() => (
-            <Skeleton height={222} />
+            <Skeleton height={242} />
           ))
         ) : (
           <>
