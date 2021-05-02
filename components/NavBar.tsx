@@ -14,14 +14,21 @@ const NavBar = () => {
       as="header"
       paddingTop={4}
       paddingBottom={4}
-      paddingLeft={[4, 0]}
-      paddingRight={[4, 0]}
+      paddingX={{
+        base: '4', sm: '4',
+      }}
       position="sticky"
       justifyContent="space-between"
       marginBottom={2}
     >
-      <Box display={['none', 'block']} />
-      <InputGroup width={['70%', 'unset', 400]}>
+      <Box display={{
+        base: 'none', sm: 'none', md: 'block',
+      }}
+      />
+      <InputGroup width={{
+        base: '70%', sm: '70%', md: 400,
+      }}
+      >
         <InputLeftElement>
           <SearchIcon />
         </InputLeftElement>

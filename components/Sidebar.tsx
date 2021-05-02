@@ -17,12 +17,19 @@ const Sidebar = () => {
   return (
     <Flex
       left={0}
-      width={['100vw', '250px']}
+      width={{
+        base: '100vw', sm: '100vw', md: 250, lg: 250, xl: 250,
+      }}
       padding={[4, 6]}
       paddingTop={[3, 0]}
       flexDirection="column"
     >
-      <Stack direction={['row', 'column']}>
+      <Stack
+        direction={{
+          base: 'row', sm: 'row', md: 'column', lg: 'column', xl: 'column',
+        }}
+        spacing={2}
+      >
         <Link href="/">
           <Button width={['80%', '100%']} fontSize={[14, 16]}>
             <FiHome />

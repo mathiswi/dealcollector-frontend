@@ -12,6 +12,7 @@ module.exports = {
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "no-console": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "max-len": 0
   }
 };
