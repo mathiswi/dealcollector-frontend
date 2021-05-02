@@ -9,6 +9,8 @@ import {
 import { FiHome } from 'react-icons/fi';
 
 import FilterContext from '../context/FilterContext';
+import shops from '../shops';
+import capitalize from '../utils/capitalize';
 
 const Sidebar = () => {
   const { validFilterActive, setValidFilterActive } = useContext(FilterContext);
@@ -26,26 +28,13 @@ const Sidebar = () => {
             <FiHome />
           </Button>
         </Link>
-        <Link href="/famila">
-          <Button width="100%" fontSize={[14, 16]}>
-            Famila
-          </Button>
-        </Link>
-        <Link href="/lidl">
-          <Button width="100%" fontSize={[14, 16]}>
-            Lidl
-          </Button>
-        </Link>
-        <Link href="/aldi">
-          <Button width="100%" fontSize={[14, 16]}>
-            Aldi
-          </Button>
-        </Link>
-        <Link href="/edeka">
-          <Button width="100%" fontSize={[14, 16]}>
-            Edeka
-          </Button>
-        </Link>
+        {shops.map((shop) => (
+          <Link key={shop} href={`/${shop}`}>
+            <Button width="100%" fontSize={[14, 16]}>
+              {capitalize(shop)}
+            </Button>
+          </Link>
+        ))}
       </Stack>
       <Checkbox
         isChecked={validFilterActive}
