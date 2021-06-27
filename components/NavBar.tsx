@@ -38,6 +38,7 @@ const NavBar = () => {
           onChange={(event) => setQuery(event.target.value.toLowerCase())}
           background={colorMode === 'dark' && 'gray.700'}
           boxShadow="md"
+          autoFocus
         />
       </InputGroup>
       <Button onClick={toggleColorMode} alignSelf="flex-end">
