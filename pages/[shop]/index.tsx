@@ -17,7 +17,6 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
       shopDeals,
       key: `/${context.params.shop}`,
     },
-    revalidate: 3600, // full week
   };
 };
 
