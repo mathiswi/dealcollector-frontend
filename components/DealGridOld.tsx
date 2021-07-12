@@ -15,11 +15,13 @@ const Cell = React.memo(({
   // @ts-ignore
   data, columnIndex, rowIndex, style,
 }) => {
-  const { filteredData, columnCount } = data;
+  const { filteredData, columnCount } : { filteredData: Deal[], columnCount: number } = data;
   const dealIndex = rowIndex * columnCount + columnIndex;
   if (dealIndex >= filteredData.length) return <></>;
+  const key = filteredData[rowIndex * columnCount + columnIndex].dealId;
+
   return (
-    <Box style={style} padding={columnCount === 1 ? 4 : 0} paddingRight={4}>
+    <Box style={style} padding={columnCount === 1 ? 4 : 0} paddingRight={4} key={key}>
       <DealCard deal={filteredData[rowIndex * columnCount + columnIndex]} />
     </Box>
 
@@ -46,7 +48,6 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
       rowIndex: 0,
     });
   }, [query, validFilterActive]);
-  console.log(columnCount);
   return (
     <Box height="100%">
       <AutoSizer>
