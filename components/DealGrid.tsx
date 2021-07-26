@@ -40,8 +40,9 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
         spacing={4}
       >
         {loading ? (
-          [...Array(itemsPerPage)].map(() => (
-            <Skeleton height={242} />
+          [...Array(itemsPerPage)].map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Skeleton height={242} key={index} />
           ))
         ) : (
           <>
