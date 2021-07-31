@@ -43,14 +43,24 @@ const DealCard = ({ deal }: { deal: Deal }) => {
           fallback={<Skeleton alignSelf="center" h="100px" w="140px" />}
           src={deal.imageUrl}
           alt="deal image"
-          onClick={() => window.open(deal.imageUrl, '_blank')}
+          onClick={() => window.open(deal.detailPage ?? deal.imageUrl, '_blank')}
+          cursor="pointer"
         />
       </Stack>
 
       <Stack spacing="1px" backgroundColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} padding={3}>
 
         <Tooltip label={deal.name} aria-label="name-tooltip">
-          <Text fontSize="sm" noOfLines={[3, 1]} fontWeight={700}>
+          <Text
+            fontSize="sm"
+            noOfLines={[3, 1]}
+            fontWeight={700}
+            onClick={() => window.open(deal.detailPage ?? deal.imageUrl, '_blank')}
+            cursor="pointer"
+            _hover={{
+              textDecoration: 'underline',
+            }}
+          >
             {deal.name}
           </Text>
         </Tooltip>

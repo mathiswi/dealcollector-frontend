@@ -11,4 +11,5 @@ interface Deal {
   basePrice?: string
   category?: string
   shop: string
+  detailPage?: string
 }
