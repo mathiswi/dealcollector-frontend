@@ -15,7 +15,7 @@ const Cell = React.memo(({
   // @ts-ignore
   data, columnIndex, rowIndex, style,
 }) => {
-  const { filteredData, columnCount } : { filteredData: Deal[], columnCount: number } = data;
+  const { filteredData, columnCount }: { filteredData: Deal[], columnCount: number } = data;
   const dealIndex = rowIndex * columnCount + columnIndex;
   if (dealIndex >= filteredData.length) return <></>;
   const key = filteredData[rowIndex * columnCount + columnIndex].dealId;
@@ -28,7 +28,7 @@ const Cell = React.memo(({
   );
 });
 
-const DealGrid = ({ deals } : { deals: Deal[] }) => {
+const DealGrid = ({ deals }: { deals: Deal[] }) => {
   const { query } = useContext(SearchContext);
   const { validFilterActive } = useContext(FilterContext);
 
@@ -48,6 +48,7 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
       rowIndex: 0,
     });
   }, [query, validFilterActive]);
+
   return (
     <Box height="100%">
       <AutoSizer>

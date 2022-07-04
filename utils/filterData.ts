@@ -13,8 +13,8 @@ export function filterData({ data, query, filterNonValid = false }: FilterFuncti
     }
     return (
       (
-        deal.name.toLowerCase().includes(query ?? '')
-        || deal.description?.toLowerCase().includes(query ?? '')
+        deal?.name?.toLowerCase().includes(query ?? '')
+        || deal?.description?.toLowerCase().includes(query ?? '')
       )
     );
   });
