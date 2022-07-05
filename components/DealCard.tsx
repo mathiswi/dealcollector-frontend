@@ -49,7 +49,7 @@ const DealCard = ({ deal }: { deal: Deal }) => {
         />
       </Stack>
 
-      <Stack spacing="1px" backgroundColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} padding={3} flexGrow="1">
+      <Stack spacing="1px" backgroundColor={colorMode === 'light' ? 'gray.100' : 'gray.700'} padding={3} flexGrow={1}>
 
         <Tooltip label={deal.name} aria-label="name-tooltip">
           <Text
