@@ -13,6 +13,7 @@ module.exports = {
     "react/prop-types": "off",
     "no-console": "off",
     "import/prefer-default-export": "off",
-    "max-len": 0
+    "max-len": 0,
+    "no-nested-ternary": "off"
   }
 };

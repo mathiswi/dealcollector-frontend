@@ -8,7 +8,7 @@ import DealCard from './DealCard';
 import Pagination from './Pagination';
 import { filterData } from '../utils/filterData';
 
-const DealGrid = ({ deals } : { deals: Deal[] }) => {
+const DealGrid = ({ deals }: { deals: Deal[] }) => {
   const itemsPerPage = useBreakpointValue({
     base: 9, sm: 10, md: 9, lg: 12,
   }) ?? 12;
@@ -44,14 +44,16 @@ const DealGrid = ({ deals } : { deals: Deal[] }) => {
             // eslint-disable-next-line react/no-array-index-key
             <Skeleton height={242} key={index} />
           ))
+        ) : filteredData.length < 1 ? (
+          <h2>
+            Keine Angebote gefunden
+          </h2>
         ) : (
-          <>
-            {filteredData
-              .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
-              .map((deal) => (
-                <DealCard deal={deal} key={deal.dealId} />
-              ))}
-          </>
+          filteredData
+            .slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage)
+            .map((deal) => (
+              <DealCard deal={deal} key={deal.dealId} />
+            ))
         )}
       </SimpleGrid>
       <Pagination
